@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Submit a Ticket</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles/theme.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <p class="eyebrow">Customer Support</p>
+      <h1>How can we help?</h1>
+      <p class="lead">Describe the problem in your own words. We turn it into a support ticket our team can pick up right away.</p>
+    </header>
+
+    <section class="card" aria-labelledby="form-title">
+      <h2 id="form-title" class="card-title">New ticket</h2>
+
+      <form id="ticket-form" novalidate autocomplete="off">
+        <div class="field">
+          <label for="customerId">Customer ID <span class="optional">(if you have one)</span></label>
+          <input id="customerId" name="customerId" type="text" inputmode="text"
+                 maxlength="20" placeholder="e.g. 1001" aria-describedby="customerId-error customerId-hint">
+          <p id="customerId-hint" class="hint">No customer ID? Just leave this empty. Existing customers can find it in their account settings.</p>
+          <p id="customerId-error" class="error" data-error-for="customerId" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <div class="label-row">
+            <label for="text">Describe your issue</label>
+            <span id="char-counter" class="counter" aria-live="off"></span>
+          </div>
+          <textarea id="text" name="text" rows="7" maxlength="2000"
+                    placeholder="What happened, when did it start, and what did you expect instead?"
+                    aria-describedby="text-error"></textarea>
+          <p id="text-error" class="error" data-error-for="text" aria-live="polite"></p>
+        </div>
+
+        <button id="submit-button" type="submit" class="button button-primary">Submit ticket</button>
+      </form>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+</body>
+</html>
