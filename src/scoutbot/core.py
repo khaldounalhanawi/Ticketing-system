@@ -24,12 +24,12 @@ def _client() -> Anthropic:
 
 def _request_triage(ticket_text: str) -> TicketTriage:
 	response = _client().messages.create(
-		model=MODEL,
-		max_tokens=1024,
-		system="You triage support tickets by calling triage_ticket exactly once.",
-		messages=[{"role": "user", "content": ticket_text}],
-		tools=[TRIAGE_TOOL],
-		tool_choice={"type": "tool", "name": "triage_ticket"},
+		model = MODEL,
+		max_tokens = 1024,
+		system = "You triage support tickets by calling triage_ticket exactly once.",
+		messages = [{"role": "user", "content": ticket_text}],
+		tools = [TRIAGE_TOOL],
+		tool_choice = {"type": "tool", "name": "triage_ticket"},
 	)
 	tool_use_blocks = [block for block in response.content if block.type == "tool_use"]
 	if not tool_use_blocks:
