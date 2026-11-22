@@ -33,13 +33,9 @@ def thread_config(thread_id: str) -> dict:
 	return {"configurable": {"thread_id": thread_id}}
 
 
-def human_resolution(answer, triage: dict) -> dict:
-	''' Turn the human's resume value into a resolution record.
-
-	Expects {"decision", "owner", "priority"}; a blank owner or priority keeps the AI's value.
-	A plain string (older callers) is treated as the decision alone.
-	'''
-	if not isinstance(answer, dict):
+def human_resolution(answer: dict | str, triage: dict) -> dict:
+	''' Build the resolution from the human's answer; blank owner/priority fall back to the AI's triage. '''
+	if not isinstance(answer, dict):  # a plain string from older callers is the decision alone
 		answer = {"decision": str(answer)}
 	return {
 		"path": "human_resolved",

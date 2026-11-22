@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import Command
 from rich import print
 from scoutbot import Priority, build_ticket_graph, thread_config
@@ -29,7 +30,7 @@ def ask_decision(triage: dict) -> dict | None:
 	}
 
 
-def answer_ticket(graph, ticket_id: str) -> None:
+def answer_ticket(graph: CompiledStateGraph, ticket_id: str) -> None:
 	''' Show one paused ticket, resume it with the human's decision and save its new status. '''
 	config		= thread_config (ticket_id)
 	snapshot	= graph.get_state (config)

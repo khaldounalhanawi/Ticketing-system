@@ -34,11 +34,7 @@ def triage_ticket_node(state: TicketState) -> dict:
 
 @otel
 def escalate_node(state: TicketState) -> dict:
-	''' Pause the graph for a human, then apply their decision.
-
-	The human's priority and owner replace the triage (the human has the final say). The AI's
-	original triage is kept in resolution["ai_triage"], so corrections can be measured later.
-	'''
+	''' Pause for a human, apply their priority/owner to the triage and keep the AI's original in resolution. '''
 	writer = get_stream_writer()
 	writer({"status": "HUMAN ASSISTANCE NEEDED!"})
 

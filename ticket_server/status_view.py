@@ -26,11 +26,7 @@ def merged_ticket_statuses(
 	tickets_file: Path | None = None,
 	status_file: Path | None = None,
 ) -> tuple[list[dict[str, Any]], None] | tuple[None, str]:
-	"""Return (list_of_tickets, None), or (None, error_message).
-
-	Tickets without a status record count as "new". Records whose ticket is not in
-	tickets.json (e.g. sample tickets) are still included.
-	"""
+	"""Return (tickets, None) or (None, error); untriaged tickets are "new", status-only records are kept."""
 	tickets, error = load_tickets(tickets_file or settings.TICKETS_FILE)
 	if error:
 		return None, error
