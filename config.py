@@ -1,14 +1,10 @@
-from pathlib import Path
 from scoutbot import sqlite_checkpointer
-
-ROOT			= Path (__file__).parent
-FORM_TICKETS	= ROOT / "tickets.json"
-SAMPLE_TICKETS	= ROOT / "sample_tickets.json"
+from ticket_server.settings import TICKETS_FILE, SAMPLE_TICKETS_FILE, STATUS_FILE, CHECKPOINTS_FILE
 
 # Tickets from the submission form if there are any, otherwise the sample set.
-TICKETS_PATH	= FORM_TICKETS if FORM_TICKETS.exists() else SAMPLE_TICKETS
-STATUS_PATH		= ROOT / "ticket_status.json"
-DB_PATH			= ROOT / "checkpoints.db"
+TICKETS_PATH	= TICKETS_FILE if TICKETS_FILE.exists() else SAMPLE_TICKETS_FILE
+STATUS_PATH		= STATUS_FILE
+DB_PATH			= CHECKPOINTS_FILE
 
 # File-backed so escalated tickets survive the process and can be resumed later.
 CHECKPOINTER	= sqlite_checkpointer (DB_PATH)

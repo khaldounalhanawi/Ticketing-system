@@ -9,13 +9,20 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 HOST = "127.0.0.1"
 PORT = 8000
 
-# What the server shows in the browser, and where it stores tickets.
+# What the server shows in the browser. Never put data files in here: it is public.
 STATIC_DIR = PROJECT_ROOT / "front-end"
-TICKETS_FILE = PROJECT_ROOT / "tickets.json"
-TICKETS_ENDPOINT = "/api/tickets"
 
-# Written by run_graph.py, read by the dashboard (dashboard.html).
-STATUS_FILE = PROJECT_ROOT / "ticket_status.json"
+# data/ holds files the app writes (gitignored). seed/ holds committed template data.
+# This is the one place these paths are defined; config.py imports them from here.
+DATA_DIR = PROJECT_ROOT / "data"
+SEED_DIR = PROJECT_ROOT / "seed"
+
+TICKETS_FILE = DATA_DIR / "tickets.json"            # form submissions
+STATUS_FILE = DATA_DIR / "ticket_status.json"       # written by run_graph.py
+CHECKPOINTS_FILE = DATA_DIR / "checkpoints.db"      # paused graph runs
+SAMPLE_TICKETS_FILE = SEED_DIR / "sample_tickets.json"
+
+TICKETS_ENDPOINT = "/api/tickets"
 STATUS_ENDPOINT = "/api/tickets/status"
 
 # Ticket IDs are handed out in order: T-1001, T-1002, ...

@@ -1,4 +1,4 @@
-"""Reads and writes tickets.json safely.
+"""Reads and writes data/tickets.json safely.
 
 - A lock makes sure two requests never write at the same time.
 - Writes go to a temporary file first and then replace the real file,
@@ -43,6 +43,7 @@ def next_ticket_id(tickets: list[Any]) -> str:
 
 def write_tickets(path: Path, tickets: list[Any] | dict[str, Any]) -> None:
     """Write the full list to disk in one step."""
+    path.parent.mkdir(parents=True, exist_ok=True)  # data/ is gitignored, so a fresh clone lacks it
     temporary_path = path.with_name(path.name + ".tmp")
     content = json.dumps(tickets, indent=2, ensure_ascii=False) + "\n"
     temporary_path.write_text(content, encoding="utf-8")

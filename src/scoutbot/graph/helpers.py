@@ -24,6 +24,7 @@ def route_after_triage(state: TicketState) -> str:
 
 def sqlite_checkpointer(db_path: Union[str, Path]) -> SqliteSaver:
 	''' Create a SQLite-backed checkpointer that saves graph state to the given file. '''
+	Path(db_path).parent.mkdir(parents=True, exist_ok=True)
 	return SqliteSaver(sqlite3.connect(str(db_path), check_same_thread=False))
 
 

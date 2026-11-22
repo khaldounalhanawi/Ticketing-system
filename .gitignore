@@ -3,11 +3,12 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+.mypy_cache/
 *.egg-info/
 .ipynb_checkpoints/
 *.jsonl
-# Written by run_resume.py. The -wal and -shm companions are SQLite's write-ahead log.
-checkpoints.db
-checkpoints.db-*
-# Written by run_graph.py: one status record per ticket, read by the dashboard.
-ticket_status.json
+.DS_Store
+
+# Everything the app writes at runtime: tickets.json, ticket_status.json, checkpoints.db
+# (plus SQLite's -wal/-shm companions). seed/ is template data and stays committed.
+data/

@@ -5,7 +5,8 @@ A JSON file stands in for a real customer database.
 import json
 from pathlib import Path
 
-CUSTOMERS_PATH = Path(__file__).parent.parent.parent / "mock_customers.json"
+# src/scoutbot/tools.py -> project root -> seed/
+CUSTOMERS_PATH = Path(__file__).resolve().parents[2] / "seed" / "mock_customers.json"
 
 
 def look_up_customer(customer_id: str) -> dict:

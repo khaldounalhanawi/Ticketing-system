@@ -8,7 +8,7 @@ from rich import print
 import sys
 
 load_dotenv()
-DB_PATH = Path(__file__).parent / "checkpoints.db"
+from config import DB_PATH
 
 checkpointer = SqliteSaver(sqlite3.connect(str(DB_PATH), check_same_thread=False))
 graph = build_ticket_graph(checkpointer)

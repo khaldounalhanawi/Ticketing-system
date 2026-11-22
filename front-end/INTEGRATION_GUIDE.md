@@ -33,7 +33,7 @@ ticket_server/                  Small Python backend (standard library only)
 ├── storage.py                  Appends to tickets.json safely
 └── http_helpers.py
 
-tickets.json                    Created on the first submit, in the project root
+data/tickets.json               Created on the first submit (data/ is gitignored)
 ```
 
 **Copy these two folders to reuse the builder:** `js/ticket-builder/` and `js/config/`. Keep them next to each other, because the builder imports `../config/settings.js`.
@@ -49,7 +49,7 @@ python -m ticket_server
 # open http://127.0.0.1:8000/submission_form.html
 ```
 
-That one command hosts the page and saves every submitted ticket to `tickets.json` in the project root. Press Ctrl+C to stop it.
+That one command hosts the page and saves every submitted ticket to `data/tickets.json`. Press Ctrl+C to stop it.
 
 The page has to come from this server. If you open the HTML file straight from disk, the browser blocks the scripts. If you open it from a different server, the saving request goes to the wrong place.
 
@@ -60,7 +60,7 @@ The page has to come from this server. If you open the HTML file straight from d
 3. The server checks the input again, gives the ticket the next free ID (`T-1001`, `T-1002`, …, counting up from the highest ID already in the file), and appends it to `tickets.json`.
 4. The server replies `201 { "id": "T-1004" }`. The page thanks the customer and shows the ticket number.
 
-**Saving is write-only.** The server can only add tickets. It has no endpoint for reading them, it doesn't serve `tickets.json` (the file sits outside `front-end/`), and its reply contains only the new ID. So neither the page nor a visitor can see other tickets.
+**Saving is write-only.** `POST /api/tickets` can only add tickets, and its reply contains only the new ID. The server never serves `data/` as files (it sits outside `front-end/`). The one read path is `GET /api/tickets/status`, used by `dashboard.html`, which returns every ticket with its status. That is fine while the server only listens on 127.0.0.1, but it must sit behind a login before the dashboard is ever exposed to other people.
 
 The server ignores any `id` the browser sends. It assigns IDs itself, so they stay unique and sequential. The random ID that `buildTicket()` creates only matters when you use the builder without this server.
 
