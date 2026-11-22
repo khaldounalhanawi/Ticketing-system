@@ -2,31 +2,33 @@ from dotenv import load_dotenv
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import Command
 from rich import print
-from scoutbot import Priority, build_ticket_graph, thread_config
+from scoutbot import Category, Priority, build_ticket_graph, thread_config
 from ticket_server.status_store import PENDING_HUMAN, load_statuses, save_status, status_from_snapshot
 from config import STATUS_PATH, CHECKPOINTER
 
 load_dotenv()
 PRIORITIES = [p.value for p in Priority]
+CATEGORIES = [c.value for c in Category]
 
-def ask_priority(suggested: str) -> str:
-	''' Ask until the answer is a valid priority. Blank keeps the AI's suggestion. '''
+def ask_choice(label: str, options: list[str], suggested: str) -> str:
+	''' Ask until the answer is one of the options. Blank keeps the AI's suggestion. '''
 	while True:
-		answer = input(f"Priority {PRIORITIES} [{suggested}]: ").strip().lower()
-		if answer == "" or answer in PRIORITIES:
+		answer = input(f"{label} {options} [{suggested}]: ").strip().lower()
+		if answer == "" or answer in options:
 			return answer
-		print(f"[red]Type one of {PRIORITIES}, or press Enter to keep {suggested}.[/red]")
+		print(f"[red]Type one of {options}, or press Enter to keep {suggested}.[/red]")
 
 
 def ask_decision(triage: dict) -> dict | None:
-	''' Collect the human's decision, or None to skip. Blank owner/priority keeps the AI's values. '''
+	''' Collect the human's decision, or None to skip. Blank answers keep the AI's values. '''
 	text = input("Decision (Enter to skip): ").strip()      # e.g. "refund approved"
 	if not text:
 		return None
 	return {
 		"decision": text,
 		"owner": input(f"Assign to team [{triage.get('suggested_owner', '')}]: ").strip(),
-		"priority": ask_priority(triage.get("priority", "")),
+		"category": ask_choice("Category", CATEGORIES, triage.get("category", "")),
+		"priority": ask_choice("Priority", PRIORITIES, triage.get("priority", "")),
 	}
 
 
@@ -54,7 +56,7 @@ def answer_ticket(graph: CompiledStateGraph, ticket_id: str) -> None:
 	print(f"[green]resolution: {record['resolution']}[/green]")
 
 
-def main():
+def main() -> None:
 	''' Load every pending_human ticket and answer them one by one. '''
 	statuses, error = load_statuses (STATUS_PATH)
 	if error:

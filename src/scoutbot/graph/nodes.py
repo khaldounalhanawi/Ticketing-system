@@ -34,7 +34,7 @@ def triage_ticket_node(state: TicketState) -> dict:
 
 @otel
 def escalate_node(state: TicketState) -> dict:
-	''' Pause for a human, apply their priority/owner to the triage and keep the AI's original in resolution. '''
+	''' Pause for a human, apply their category/priority/owner to the triage, keep the AI's original. '''
 	writer = get_stream_writer()
 	writer({"status": "HUMAN ASSISTANCE NEEDED!"})
 
@@ -48,12 +48,13 @@ def escalate_node(state: TicketState) -> dict:
 	return {
 		"triage": {
 			**state['triage'],
+			"category": resolution['category'],
 			"priority": resolution['priority'],
 			"suggested_owner": resolution['owner'],
 		},
 		"resolution": {**resolution, "ai_triage": state['triage']},
 		"notes": [f"human decided: {resolution['decision']} "
-				  f"({resolution['priority']}, {resolution['owner']})"],
+				  f"({resolution['category']}, {resolution['priority']}, {resolution['owner']})"],
 	}
 
 @otel

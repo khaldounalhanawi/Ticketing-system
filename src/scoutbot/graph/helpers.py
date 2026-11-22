@@ -34,12 +34,13 @@ def thread_config(thread_id: str) -> dict:
 
 
 def human_resolution(answer: dict | str, triage: dict) -> dict:
-	''' Build the resolution from the human's answer; blank owner/priority fall back to the AI's triage. '''
+	''' Build the resolution from the human's answer; blank fields fall back to the AI's triage. '''
 	if not isinstance(answer, dict):  # a plain string from older callers is the decision alone
 		answer = {"decision": str(answer)}
 	return {
 		"path": "human_resolved",
 		"decision": answer.get("decision") or "(no decision given)",
 		"owner": answer.get("owner") or triage.get("suggested_owner", "support-team"),
+		"category": answer.get("category") or triage.get("category", ""),
 		"priority": answer.get("priority") or triage.get("priority", ""),
 	}
