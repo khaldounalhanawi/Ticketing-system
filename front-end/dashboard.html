@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Ticket Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/dashboard.css">
+  <script type="module" src="js/dashboard-app.js"></script>
+</head>
+<body>
+  <main class="page page-wide">
+    <header class="page-header dashboard-header">
+      <div>
+        <p class="eyebrow">Support Team</p>
+        <h1>Ticket dashboard</h1>
+        <p class="lead">Every ticket, sorted by where it stands in triage.</p>
+      </div>
+      <div class="header-actions">
+        <a class="nav-link" href="submission_form.html">New ticket</a>
+        <button id="refresh-button" type="button" class="button button-secondary">Refresh</button>
+      </div>
+    </header>
+
+    <p id="status" class="status" role="status" aria-live="polite">Loading tickets…</p>
+
+    <div class="board">
+      <section class="column" data-group="unresolved" aria-labelledby="col-unresolved">
+        <header class="column-head">
+          <h2 id="col-unresolved">Unresolved</h2>
+          <span class="count" data-count>0</span>
+        </header>
+        <p class="column-hint">Not triaged yet, or triage failed.</p>
+        <div class="column-list" data-list></div>
+      </section>
+
+      <section class="column" data-group="pending" aria-labelledby="col-pending">
+        <header class="column-head">
+          <h2 id="col-pending">Waiting on a human</h2>
+          <span class="count" data-count>0</span>
+        </header>
+        <p class="column-hint">Escalated and paused until someone reviews them.</p>
+        <div class="column-list" data-list></div>
+      </section>
+
+      <section class="column" data-group="resolved" aria-labelledby="col-resolved">
+        <header class="column-head">
+          <h2 id="col-resolved">Resolved</h2>
+          <span class="count" data-count>0</span>
+        </header>
+        <p class="column-hint">Handled automatically or by a person.</p>
+        <div class="column-list" data-list></div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

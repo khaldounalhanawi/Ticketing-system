@@ -2,6 +2,7 @@
 
 import re
 import unicodedata
+from typing import Any
 
 from ticket_server import settings
 
@@ -10,7 +11,7 @@ HIDDEN_CHARS = re.compile(
 )
 
 
-def clean_text(value):
+def clean_text(value: Any) -> str:
     """Return the value as a clean single-line string, or "" if it is not a string."""
     if not isinstance(value, str):
         return ""
@@ -19,7 +20,7 @@ def clean_text(value):
     return " ".join(value.split())
 
 
-def validate_payload(payload):
+def validate_payload(payload: Any) -> tuple[dict[str, str], None] | tuple[None, str]:
     """Return (cleaned_fields, None) when valid, or (None, error_message)."""
     if not isinstance(payload, dict):
         return None, "Request body must be a JSON object."

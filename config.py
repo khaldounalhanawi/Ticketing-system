@@ -1,9 +1,14 @@
 from pathlib import Path
 from scoutbot import sqlite_checkpointer
-from langgraph.checkpoint.memory import InMemorySaver
 
-TICKETS_PATH	= Path (__file__).parent / "sample_tickets.json"
-DB_PATH			= Path (__file__).parent / "checkpoints.db"
+ROOT			= Path (__file__).parent
+FORM_TICKETS	= ROOT / "tickets.json"
+SAMPLE_TICKETS	= ROOT / "sample_tickets.json"
 
-# CHECKPOINTER	= sqlite_checkpointer (DB_PATH)
-CHECKPOINTER	= InMemorySaver()
+# Tickets from the submission form if there are any, otherwise the sample set.
+TICKETS_PATH	= FORM_TICKETS if FORM_TICKETS.exists() else SAMPLE_TICKETS
+STATUS_PATH		= ROOT / "ticket_status.json"
+DB_PATH			= ROOT / "checkpoints.db"
+
+# File-backed so escalated tickets survive the process and can be resumed later.
+CHECKPOINTER	= sqlite_checkpointer (DB_PATH)

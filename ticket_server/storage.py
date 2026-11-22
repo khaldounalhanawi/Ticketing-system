@@ -9,13 +9,15 @@
 import json
 import os
 import threading
+from pathlib import Path
+from typing import Any
 
 from ticket_server import settings
 
 _write_lock = threading.Lock()
 
 
-def load_tickets(path):
+def load_tickets(path: Path) -> tuple[list[Any], None] | tuple[None, str]:
     """Return (tickets, None), or (None, error_message) if the file is unusable."""
     if not path.exists():
         return [], None
@@ -28,7 +30,7 @@ def load_tickets(path):
     return data, None
 
 
-def next_ticket_id(tickets):
+def next_ticket_id(tickets: list[Any]) -> str:
     """Return the ID after the highest existing T-<number> ID."""
     highest = settings.TICKET_ID_START - 1
     for ticket in tickets:
@@ -39,7 +41,7 @@ def next_ticket_id(tickets):
     return f"{settings.TICKET_ID_PREFIX}{highest + 1}"
 
 
-def write_tickets(path, tickets):
+def write_tickets(path: Path, tickets: list[Any] | dict[str, Any]) -> None:
     """Write the full list to disk in one step."""
     temporary_path = path.with_name(path.name + ".tmp")
     content = json.dumps(tickets, indent=2, ensure_ascii=False) + "\n"
@@ -47,7 +49,7 @@ def write_tickets(path, tickets):
     os.replace(temporary_path, path)
 
 
-def save_ticket(customer_id, text):
+def save_ticket(customer_id: str, text: str) -> tuple[dict[str, str], None] | tuple[None, str]:
     """Append a new ticket. Return (ticket, None), or (None, error_message)."""
     with _write_lock:
         tickets, error = load_tickets(settings.TICKETS_FILE)

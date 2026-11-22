@@ -1,0 +1,124 @@
+/* =========================================================
+   Dashboard layout. All colors, fonts and sizes come from
+   the variables in theme.css; nothing is hard-coded here.
+   ========================================================= */
+
+.page-wide { max-width: 1200px; }
+
+.dashboard-header {
+  max-width: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-5);
+}
+
+.header-actions { display: flex; align-items: center; gap: var(--space-4); }
+
+.status[data-kind="info"] { color: var(--color-text-muted); }
+
+/* ---------- Columns ---------- */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+
+@media (max-width: 900px) {
+  .board { grid-template-columns: 1fr; }
+}
+
+.column {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5);
+  min-width: 0;
+}
+
+.column-head { display: flex; justify-content: space-between; align-items: center; }
+
+.column-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.count {
+  min-width: 28px;
+  padding: 2px var(--space-2);
+  border-radius: 999px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-group="pending"] .count { background: var(--color-warning-soft); color: var(--color-warning); }
+
+.column-hint { margin: var(--space-1) 0 var(--space-4); color: var(--color-text-muted); font-size: 13px; }
+
+.column-list { display: flex; flex-direction: column; gap: var(--space-3); }
+
+.empty { margin: 0; padding: var(--space-5) 0; color: var(--color-text-muted); font-size: 14px; text-align: center; }
+
+/* ---------- Ticket card ---------- */
+.ticket {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  background: var(--color-bg);
+}
+
+.ticket-head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); }
+
+.ticket-id { font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; }
+
+.badge {
+  padding: 2px var(--space-2);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.badge[data-status="failed"] { background: var(--color-error-soft); color: var(--color-error); }
+.badge[data-status="pending_human"] { background: var(--color-warning-soft); color: var(--color-warning); }
+.badge[data-status="new"] { background: var(--color-border); color: var(--color-text-muted); }
+
+.ticket-customer { margin: var(--space-1) 0 var(--space-2); color: var(--color-text-muted); font-size: 13px; }
+
+.ticket-text {
+  margin: 0;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-top: var(--space-3); }
+.chips:empty { display: none; }
+
+.chip {
+  padding: 2px var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.chip[data-kind="priority"][data-value="high"] { border-color: var(--color-error); color: var(--color-error); }
+
+.notes { margin-top: var(--space-3); font-size: 13px; color: var(--color-text-muted); }
+.notes summary { cursor: pointer; font-weight: 500; }
+.notes ul { margin: var(--space-2) 0 0; padding-left: var(--space-5); overflow-wrap: anywhere; }

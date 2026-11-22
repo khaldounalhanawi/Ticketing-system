@@ -47,7 +47,9 @@ def stream_graph(graph, ticket: dict) -> None:
 	''' Stream a ticket through the graph, printing node updates and custom status events. '''
 	state = initial_state(ticket["text"], ticket["customer_id"], ticket["id"])
 	config = thread_config(ticket["id"])
-	for mode, chunk in graph.stream(state, stream_mode=["updates", "custom"], config=config):
+	for mode, chunk in graph.stream(
+		state, stream_mode=["updates", "custom"], config=config, durability="sync"
+	):
 		if mode == "updates":
 			print_updates(chunk)
 		elif mode == "custom":

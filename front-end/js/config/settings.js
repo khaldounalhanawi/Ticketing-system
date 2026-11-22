@@ -12,6 +12,7 @@ export const TICKET_RULES = Object.freeze({
 
 export const API_SETTINGS = Object.freeze({
   ticketsEndpoint: "/api/tickets",
+  statusEndpoint: "/api/tickets/status",
   timeoutMs: 8000,
 });
 
@@ -27,4 +28,28 @@ export const MESSAGES = Object.freeze({
   serverUnreachable: "Cannot reach the ticket server. Is it running? (python -m ticket_server)",
   submitIdle: "Submit ticket",
   submitBusy: "Sending…",
+});
+
+// Dashboard: which ticket statuses belong in which column, and how they are labelled.
+export const DASHBOARD_GROUPS = Object.freeze([
+  { key: "unresolved", statuses: ["new", "failed"] },
+  { key: "pending", statuses: ["pending_human"] },
+  { key: "resolved", statuses: ["resolved"] },
+]);
+
+export const STATUS_LABELS = Object.freeze({
+  new: "Not triaged",
+  failed: "Triage failed",
+  pending_human: "Needs human",
+  resolved: "Resolved",
+});
+
+export const DASHBOARD_MESSAGES = Object.freeze({
+  loading: "Loading tickets…",
+  loadFailed: "Could not load ticket statuses.",
+  emptyGroup: "Nothing here.",
+  noCustomer: "No customer ID",
+  updatedAt: "Last updated",
+  refreshIdle: "Refresh",
+  refreshBusy: "Loading…",
 });

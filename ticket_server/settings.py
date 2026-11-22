@@ -14,6 +14,10 @@ STATIC_DIR = PROJECT_ROOT / "front-end"
 TICKETS_FILE = PROJECT_ROOT / "tickets.json"
 TICKETS_ENDPOINT = "/api/tickets"
 
+# Written by run_graph.py, read by the dashboard (dashboard.html).
+STATUS_FILE = PROJECT_ROOT / "ticket_status.json"
+STATUS_ENDPOINT = "/api/tickets/status"
+
 # Ticket IDs are handed out in order: T-1001, T-1002, ...
 TICKET_ID_PREFIX = "T-"
 TICKET_ID_START = 1001

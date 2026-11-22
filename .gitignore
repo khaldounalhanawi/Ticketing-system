@@ -9,3 +9,5 @@ __pycache__/
 # Written by run_resume.py. The -wal and -shm companions are SQLite's write-ahead log.
 checkpoints.db
 checkpoints.db-*
+# Written by run_graph.py: one status record per ticket, read by the dashboard.
+ticket_status.json

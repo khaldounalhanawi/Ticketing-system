@@ -1,16 +1,20 @@
 """Small helpers for reading and answering HTTP requests."""
 
 import json
+from http.server import BaseHTTPRequestHandler
+from typing import Any
 
 from ticket_server import settings
 
 
-def origin_allowed(origin):
+def origin_allowed(origin: str | None) -> bool:
     """Block other websites from posting to this server. A missing Origin is allowed (e.g. curl)."""
     return origin is None or origin in settings.ALLOWED_ORIGINS
 
 
-def read_json_body(handler):
+def read_json_body(
+    handler: BaseHTTPRequestHandler,
+) -> tuple[Any, None] | tuple[None, tuple[int, str]]:
     """Return (payload, None), or (None, (status_code, error_message))."""
     content_type = handler.headers.get("Content-Type", "").split(";")[0].strip().lower()
     if content_type != "application/json":
@@ -27,7 +31,7 @@ def read_json_body(handler):
         return None, (400, "Request body is not valid JSON.")
 
 
-def send_json(handler, status, payload):
+def send_json(handler: BaseHTTPRequestHandler, status: int, payload: Any) -> None:
     """Send a JSON response with the given status code."""
     body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
     handler.send_response(status)

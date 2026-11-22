@@ -7,7 +7,7 @@ from ticket_server import settings
 from ticket_server.request_handler import TicketRequestHandler
 
 
-def run():
+def run() -> None:
 	handler = partial(TicketRequestHandler, directory=str(settings.STATIC_DIR))
 	try:
 		server = ThreadingHTTPServer((settings.HOST, settings.PORT), handler)
@@ -16,6 +16,7 @@ def run():
 		return
 
 	print(f"Form:    http://{settings.HOST}:{settings.PORT}/submission_form.html")
+	print(f"Form:    http://{settings.HOST}:{settings.PORT}/dashboard.html")
 	print(f"Tickets: {settings.TICKETS_FILE}")
 	print("Press Ctrl+C to stop.")
 	try:

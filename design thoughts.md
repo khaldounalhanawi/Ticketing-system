@@ -5,6 +5,7 @@ code:
 - no function should be longer than 25 lines
 - maximum return objects from each funciton is 2
 - code should be human readable, do not use weird and overcomplicated function formats
+- when making functions, always type annotate the parameters and return types
 
 
 file structure:
