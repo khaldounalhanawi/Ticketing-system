@@ -58,6 +58,9 @@ export function createTicketCard(ticket) {
     ? `Customer ${ticket.customer_id}` : DASHBOARD_MESSAGES.noCustomer));
   card.append(element("p", "ticket-text", ticket.text));
   card.append(triageChips(triage, resolution));
+  if (resolution.path === "human_resolved" && resolution.decision) {
+    card.append(element("p", "ticket-decision", `Human decision: ${resolution.decision}`));
+  }
   if (notes.length > 0) {
     card.append(notesBlock(notes));
   }

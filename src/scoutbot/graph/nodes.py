@@ -4,7 +4,7 @@ from scoutbot.core import triage
 from scoutbot.tools import look_up_customer
 from langgraph.config import get_stream_writer
 from .state import TicketState
-from .helpers import ticket_with_customer
+from .helpers import human_resolution, ticket_with_customer
 from .utils import otel
 
 @otel
@@ -34,16 +34,31 @@ def triage_ticket_node(state: TicketState) -> dict:
 
 @otel
 def escalate_node(state: TicketState) -> dict:
-	''' Pause the graph for a human and store their answer as the resolution. '''
+	''' Pause the graph for a human, then apply their decision.
+
+	The human's priority and owner replace the triage (the human has the final say). The AI's
+	original triage is kept in resolution["ai_triage"], so corrections can be measured later.
+	'''
 	writer = get_stream_writer()
 	writer({"status": "HUMAN ASSISTANCE NEEDED!"})
 
 	answer = interrupt({
-		'ticket': state['ticket_text'], 
-		'notes': state['notes']
+		'ticket': state['ticket_text'],
+		'triage': state['triage'],
+		'notes': state['notes'],
 	})
 
-	return { "resolution": answer }
+	resolution = human_resolution(answer, state['triage'])
+	return {
+		"triage": {
+			**state['triage'],
+			"priority": resolution['priority'],
+			"suggested_owner": resolution['owner'],
+		},
+		"resolution": {**resolution, "ai_triage": state['triage']},
+		"notes": [f"human decided: {resolution['decision']} "
+				  f"({resolution['priority']}, {resolution['owner']})"],
+	}
 
 @otel
 def auto_resolve_node(state: TicketState) -> dict:

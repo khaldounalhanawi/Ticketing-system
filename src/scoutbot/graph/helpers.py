@@ -31,3 +31,19 @@ def sqlite_checkpointer(db_path: Union[str, Path]) -> SqliteSaver:
 def thread_config(thread_id: str) -> dict:
 	''' Build the LangGraph config that ties a run to the given thread ID. '''
 	return {"configurable": {"thread_id": thread_id}}
+
+
+def human_resolution(answer, triage: dict) -> dict:
+	''' Turn the human's resume value into a resolution record.
+
+	Expects {"decision", "owner", "priority"}; a blank owner or priority keeps the AI's value.
+	A plain string (older callers) is treated as the decision alone.
+	'''
+	if not isinstance(answer, dict):
+		answer = {"decision": str(answer)}
+	return {
+		"path": "human_resolved",
+		"decision": answer.get("decision") or "(no decision given)",
+		"owner": answer.get("owner") or triage.get("suggested_owner", "support-team"),
+		"priority": answer.get("priority") or triage.get("priority", ""),
+	}

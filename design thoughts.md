@@ -6,6 +6,7 @@ code:
 - maximum return objects from each funciton is 2
 - code should be human readable, do not use weird and overcomplicated function formats
 - when making functions, always type annotate the parameters and return types
+- make variable names and function names human readable, and avoid short abreviations like 'for t in tickets'
 
 
 file structure:

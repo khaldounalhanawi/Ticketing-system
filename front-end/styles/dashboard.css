@@ -122,3 +122,13 @@
 .notes { margin-top: var(--space-3); font-size: 13px; color: var(--color-text-muted); }
 .notes summary { cursor: pointer; font-weight: 500; }
 .notes ul { margin: var(--space-2) 0 0; padding-left: var(--space-5); overflow-wrap: anywhere; }
+
+.ticket-decision {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-accent-soft);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
