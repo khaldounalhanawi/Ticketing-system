@@ -3,9 +3,9 @@
 from pathlib import Path
 from typing import Any
 
-from ticket_server import settings
-from ticket_server.status_store import load_statuses
-from ticket_server.storage import load_tickets
+from scoutbot.tickets import settings
+from scoutbot.tickets.status_store import load_statuses
+from scoutbot.tickets.storage import load_tickets
 
 NEW = "new"
 

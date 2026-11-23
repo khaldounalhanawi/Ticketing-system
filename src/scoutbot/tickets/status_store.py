@@ -1,7 +1,7 @@
 """Reads and writes ticket_status.json: one status record per ticket, keyed by ticket ID.
 
-run_graph.py writes a record after each ticket; the server reads them for the dashboard.
-No langgraph import here, so the server stays light.
+run_graph.py and resolve.py write records; the dashboard reads them through ticket_server.
+No langgraph import at runtime; only type hints use it.
 """
 
 from __future__ import annotations
@@ -11,9 +11,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-from ticket_server.storage import write_tickets
+from scoutbot.tickets.storage import write_tickets
 
-if TYPE_CHECKING:  # type-only import, so the server never loads langgraph
+if TYPE_CHECKING:  # type-only import, langgraph is not loaded at runtime
 	from langgraph.types import StateSnapshot
 
 PENDING_HUMAN = "pending_human"

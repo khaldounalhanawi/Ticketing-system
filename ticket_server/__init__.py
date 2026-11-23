@@ -1,1 +1,1 @@
-"""Tiny local backend that saves tickets from the submission form into data/tickets.json."""
+"""Web front end for the ticket workflow: serves the pages and turns HTTP requests into scoutbot.tickets calls."""

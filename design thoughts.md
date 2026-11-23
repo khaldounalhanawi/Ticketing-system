@@ -7,6 +7,7 @@ code:
 - code should be human readable, do not use weird and overcomplicated function formats
 - when making functions, always type annotate the parameters and return types
 - make variable names and function names human readable, and avoid short abreviations like 'for t in tickets'
+- you may write only one line of function discription in form of a dockstring under the function definition line
 
 
 file structure:

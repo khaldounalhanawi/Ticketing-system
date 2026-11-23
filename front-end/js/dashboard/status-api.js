@@ -1,4 +1,4 @@
-// Fetches every ticket with its status from the server (tickets.json + ticket_status.json).
+// Fetches every ticket with its status, plus the review form's category/priority options.
 // Read-only: this module never changes anything on the server.
 
 import { API_SETTINGS, DASHBOARD_MESSAGES, MESSAGES } from "../config/settings.js";
@@ -12,14 +12,15 @@ export async function fetchStatuses() {
       signal: controller.signal,
     });
     if (!response.ok) {
-      return { tickets: null, error: DASHBOARD_MESSAGES.loadFailed };
+      return { board: null, error: DASHBOARD_MESSAGES.loadFailed };
     }
     const body = await response.json();
+    const options = body.options && typeof body.options === "object" ? body.options : {};
     return Array.isArray(body.tickets)
-      ? { tickets: body.tickets, error: null }
-      : { tickets: null, error: DASHBOARD_MESSAGES.loadFailed };
+      ? { board: { tickets: body.tickets, options }, error: null }
+      : { board: null, error: DASHBOARD_MESSAGES.loadFailed };
   } catch (error) {
-    return { tickets: null, error: MESSAGES.serverUnreachable };
+    return { board: null, error: MESSAGES.serverUnreachable };
   } finally {
     clearTimeout(timer);
   }

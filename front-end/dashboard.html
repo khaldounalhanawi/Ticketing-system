@@ -59,5 +59,42 @@
       </section>
     </div>
   </main>
+
+  <dialog id="review-dialog" class="review-dialog" aria-labelledby="review-title">
+    <form id="review-form" novalidate autocomplete="off">
+      <h2 id="review-title" class="card-title">Review</h2>
+      <p id="review-text" class="review-text"></p>
+
+      <div class="field">
+        <label for="review-decision">Your decision</label>
+        <textarea id="review-decision" name="decision" rows="3" maxlength="500"
+                  placeholder="e.g. Refund approved, customer informed"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="review-owner">Assign to team</label>
+        <input id="review-owner" name="owner" type="text" maxlength="60">
+        <p class="hint">Pre-filled with the AI's suggestion. Change only what is wrong.</p>
+      </div>
+
+      <div class="review-row">
+        <div class="field">
+          <label for="review-category">Category</label>
+          <select id="review-category" name="category"></select>
+        </div>
+        <div class="field">
+          <label for="review-priority">Priority</label>
+          <select id="review-priority" name="priority"></select>
+        </div>
+      </div>
+
+      <p id="review-error" class="error" role="alert" aria-live="polite"></p>
+
+      <div class="review-actions">
+        <button id="review-cancel" type="button" class="button button-secondary">Cancel</button>
+        <button id="review-submit" type="submit" class="button button-primary">Save decision</button>
+      </div>
+    </form>
+  </dialog>
 </body>
 </html>

@@ -1,7 +1,7 @@
 // Builds one ticket card. Uses textContent only, never innerHTML,
 // so ticket text can never be interpreted as HTML or script.
 
-import { DASHBOARD_MESSAGES, STATUS_LABELS } from "../config/settings.js";
+import { DASHBOARD_MESSAGES, REVIEW_MESSAGES, STATUS_LABELS } from "../config/settings.js";
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -63,6 +63,12 @@ export function createTicketCard(ticket) {
   }
   if (notes.length > 0) {
     card.append(notesBlock(notes));
+  }
+  if (ticket.status === "pending_human") {
+    const review = element("button", "button button-small", REVIEW_MESSAGES.button);
+    review.type = "button";
+    review.dataset.review = ticket.id;   // dashboard-app.js listens for clicks on [data-review]
+    card.append(review);
   }
   return card;
 }

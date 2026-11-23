@@ -13,6 +13,7 @@ export const TICKET_RULES = Object.freeze({
 export const API_SETTINGS = Object.freeze({
   ticketsEndpoint: "/api/tickets",
   statusEndpoint: "/api/tickets/status",
+  resolveEndpoint: "/api/tickets/{id}/resolve",
   timeoutMs: 8000,
 });
 
@@ -52,4 +53,19 @@ export const DASHBOARD_MESSAGES = Object.freeze({
   updatedAt: "Last updated",
   refreshIdle: "Refresh",
   refreshBusy: "Loading…",
+});
+
+// Review form: rules must match ticket_server/settings.py (DECISION_MAX_LENGTH).
+export const REVIEW_RULES = Object.freeze({
+  decisionMaxLength: 500,
+  ownerMaxLength: 60,
+});
+
+export const REVIEW_MESSAGES = Object.freeze({
+  button: "Review",
+  submitIdle: "Save decision",
+  submitBusy: "Saving…",
+  decisionMissing: "Please describe your decision.",
+  saveFailed: "The decision could not be saved.",
+  saved: "Decision saved for",
 });

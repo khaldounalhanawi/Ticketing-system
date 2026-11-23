@@ -4,7 +4,7 @@ from scoutbot import build_ticket_graph, print_ticket, stream_graph, thread_conf
 from scoutbot.core import TriageError
 import genai_otel
 from config import TICKETS_PATH, STATUS_PATH, CHECKPOINTER
-from ticket_server.status_store import failed_record, load_statuses, save_status, status_from_snapshot
+from scoutbot.tickets.status_store import failed_record, load_statuses, save_status, status_from_snapshot
 
 load_dotenv()
 

@@ -1,9 +1,9 @@
 from dotenv import load_dotenv
 from langgraph.graph.state import CompiledStateGraph
-from langgraph.types import Command
 from rich import print
 from scoutbot import Category, Priority, build_ticket_graph, thread_config
-from ticket_server.status_store import PENDING_HUMAN, load_statuses, save_status, status_from_snapshot
+from scoutbot.tickets.resolve import resolve_ticket
+from scoutbot.tickets.status_store import PENDING_HUMAN, load_statuses, save_status, status_from_snapshot
 from config import STATUS_PATH, CHECKPOINTER
 
 load_dotenv()
@@ -50,9 +50,10 @@ def answer_ticket(graph: CompiledStateGraph, ticket_id: str) -> None:
 	if decision is None:
 		print("[yellow]skipped[/yellow]")
 		return
-	graph.invoke (Command (resume=decision), config)
-	record = status_from_snapshot (graph.get_state (config))
-	save_status (STATUS_PATH, ticket_id, record)
+	record, problem = resolve_ticket (graph, ticket_id, decision, STATUS_PATH)   # same function the dashboard uses
+	if problem:
+		print(f"[red]{problem.value}[/red]")
+		return
 	print(f"[green]resolution: {record['resolution']}[/green]")
 
 

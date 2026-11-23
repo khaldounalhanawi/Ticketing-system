@@ -132,3 +132,54 @@
   font-size: 13px;
   overflow-wrap: anywhere;
 }
+
+/* ---------- Review dialog ---------- */
+.button-small { margin-top: var(--space-3); padding: var(--space-1) var(--space-4); font-size: 13px; }
+
+.review-dialog {
+  width: min(560px, calc(100vw - 2 * var(--space-4)));
+  max-height: calc(100vh - 2 * var(--space-5));
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-card);
+}
+
+.review-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+
+.review-text {
+  margin: calc(-1 * var(--space-3)) 0 var(--space-5);
+  color: var(--color-text-muted);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.review-dialog textarea { min-height: 96px; }
+
+.review-dialog select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.review-dialog select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px var(--color-accent-soft);
+}
+
+.review-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+
+.review-actions { display: flex; justify-content: flex-end; gap: var(--space-3); }
+.review-actions .button-primary { width: auto; }
+
+@media (max-width: 480px) {
+  .review-row { grid-template-columns: 1fr; }
+  .review-dialog { padding: var(--space-5); }
+}

@@ -8,13 +8,13 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from scoutbot.graph import build_ticket_graph, initial_state, sqlite_checkpointer, thread_config
-from ticket_server.status_store import (
+from scoutbot.tickets.status_store import (
     failed_record,
     load_statuses,
     save_status,
     status_from_snapshot,
 )
-from ticket_server.status_view import merged_ticket_statuses
+from scoutbot.tickets.status_view import merged_ticket_statuses
 
 HIGH = {"category": "billing", "priority": "high", "suggested_owner": "billing-team"}
 LOW = {"category": "technical", "priority": "low", "suggested_owner": "support-team"}

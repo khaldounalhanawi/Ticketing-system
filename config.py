@@ -1,5 +1,5 @@
 from scoutbot import sqlite_checkpointer
-from ticket_server.settings import TICKETS_FILE, SAMPLE_TICKETS_FILE, STATUS_FILE, CHECKPOINTS_FILE
+from scoutbot.tickets.settings import TICKETS_FILE, SAMPLE_TICKETS_FILE, STATUS_FILE, CHECKPOINTS_FILE
 
 # Tickets from the submission form if there are any, otherwise the sample set.
 TICKETS_PATH	= TICKETS_FILE if TICKETS_FILE.exists() else SAMPLE_TICKETS_FILE
